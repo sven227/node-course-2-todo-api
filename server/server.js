@@ -14,6 +14,16 @@ app.listen(3000, () => {
 	console.log('Started on port 3000');
 });
 
+app.get ('/todos', (req,res) =>{
+	Todo.find().then( (todos) =>{
+		res.send( {todos} );
+		}, (e) => {
+			res.status(400).send(e);
+		})
+	});
+
+
+
 // POST routes - CRUD operations  - URL /todos for creating new todo
 app.post('/todos', (req, res) =>{
 	 console.log(req.body);
