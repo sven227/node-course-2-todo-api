@@ -39,6 +39,9 @@ app.post('/todos', (req, res) => {
 });
 
 module.exports = { app };
+
+
+
 //comments:
 // body-parser extract the entire body portion of an incoming request stream and exposes it on req.body as something easier to interface with . Yeah ! you can do it by yourself as well but using body-parser will do what is required and will save your trouble.
 

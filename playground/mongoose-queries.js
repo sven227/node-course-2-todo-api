@@ -1,9 +1,22 @@
 const {mongoose} = require('./../server/db/mongoose');
 const {Todo} = require('./../server/models/todo');
+const {Users} = require('./../server/models/user');
+
+
+var usuario = '5904c5de36ae8a0312fd882e';
+
+Users.findById(usuario).then( (items)=> {
+	console.log('=================');
+	if (!items){
+		return console.log("no user found!");
+	};
+	console.log('users found: ', items);
+});
+
+
 
 
 var id = '59188b3f51de5b0b4a63e8c5';
-
 
 // pass in the id as a string! mongoose will understand
 Todo
@@ -11,7 +24,7 @@ Todo
 			_id: id	
 		})
 	.then( (todos) =>{
-		console.log('=================');
+		
 		console.log('Todos',todos);
 	});
 
@@ -28,8 +41,12 @@ Todo
 // Adventure.findById(id, function (err, adventure) {});
 // Todo.findById(id).then( (todo) = > {}); 
 Todo.findById( id, (err, todo) => {
+	if (err) {
+		return console.log('error find by id: ', err);
+	}
 	console.log('_______________________');
 	console.log('Todo by ID: ', todo);
 })
 
 // Adventure.findById(id, function (err, adventure) {});
+
