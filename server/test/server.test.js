@@ -1,5 +1,15 @@
+// make sure mocha is loaded 
+// make sure in package.json this script is included: 
+// "scripts": {
+//   "test": "mocha server/**/*.test.js",
+//   "test-watch": "nodemon --exec 'npm test'"
+// },
+
+// run this test with - npm run test-watch
+
 const expect = require('expect');
 const request = require('supertest');
+
 const {ObjectID} = require('mongodb');
 
 const {app} = require('./../server');
@@ -13,11 +23,11 @@ const todos = [{
   text: 'Second test todo'
 }];
 
-beforeEach((done) => {
-  Todo.remove({}).then(() => {
-    return Todo.insertMany(todos);
-  }).then(() => done());
-});
+// beforeEach((done) => {
+//   Todo.remove({}).then(() => {
+//     return Todo.insertMany(todos);
+//   }).then(() => done());
+// });
 
 describe('POST /todos', () => {
   it('should create a new todo', (done) => {
