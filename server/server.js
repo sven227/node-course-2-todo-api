@@ -14,7 +14,24 @@ var app = express();
 app.use(bodyParser.json());
 
 app.listen(port, () => {
-	console.log(`Started on port ${port}`);
+	console.log(` \n Started on port ${port}`);
+});
+
+// DELETE requests
+app.delete('/todos/:id', (req, res) => {
+	const id = req.params.id;
+	if (!ObjectID.isValid(id)) {
+		return res.status(404).send();
+	}
+	Todo.findByIdAndRemove(id).then((todo) => {
+		if (!todo) {
+			return res.status(404).send();
+		}
+		res.status(200).send(`deleted todo: \n ${todo}`); //success case!
+	}).catch((e) => {
+			res.status(400).send(e);
+	});
+
 });
 
 // GET requests
@@ -30,7 +47,7 @@ app.get('/todos', (req, res) => {
 //for mor info: https://dzone.com/articles/how-to-interact-with-a-database-using-promises-in
 //for mor info: http://thecodebarbarian.com/unhandled-promise-rejections-in-node.js.html
 app.get('/todos/:id', (req, res) => {
-	var id = req.params.id;
+	const id = req.params.id;
 
 	if (!ObjectID.isValid(id)) {
 		return res.status(404).send();
@@ -40,11 +57,11 @@ app.get('/todos/:id', (req, res) => {
 		if (!todo) {
 			return res.status(404).send();
 		}
-		res.send({todo});
+		res.status(200).send({ todo });
 	})
-					.catch((e) => {
-						res.status(400).send(e);
-					})
+		.catch((e) => {
+			res.status(400).send(e);
+		})
 
 });
 
@@ -52,7 +69,8 @@ app.get('/todos/:id', (req, res) => {
 
 // POST routes - CRUD operations  - URL /todos for creating new todo
 app.post('/todos', (req, res) => {
-	console.log(req.body);
+	//console.log(req.body); // can't use console.log inside express server "app"
+	res.send(req.body);
 	var todo = new Todo({
 		text: req.body.text
 	});
